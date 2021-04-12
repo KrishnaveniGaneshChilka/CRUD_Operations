@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register A Restaurant !!</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href=stylesheet1.css>
+</head>
+
+
+<body>
+
+<div>
+  
+  <div class="col-md-9 col-lg-8 mx-auto d-flex justify-content-center align-items-center">
+
+	<form action=# onsubmit="RegisterUser()">
+
+		<div class="form-label-group ">
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  <label for="inputEmail">Email address</label>
+                </div>
+
+                <div class="form-label-group">
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                  <label for="inputPassword">Password</label>
+                </div>
+
+                
+
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"  type="Submit">Sign UP</button>
+                <div class="text-center">
+                  <a class="small" href="welcome_page2.html">Back to login!</a></div>
+              </form>
+</div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-storage.js"></script>
+
+<script>
+  
+  var firebaseConfig = {
+    apiKey: "AIzaSyAOVsGjC-hcAWmj2V0wdYMvmuuDoK2jgw8",
+    authDomain: "nowayt-restrodata.firebaseapp.com",
+    databaseURL: "https://nowayt-restrodata.firebaseio.com",
+    projectId: "nowayt-restrodata",
+    storageBucket: "nowayt-restrodata.appspot.com",
+    messagingSenderId: "148443474574",
+    appId: "1:148443474574:web:85ab2347987484e148f7df",
+    measurementId: "G-GGF9LCB932"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
+  function RegisterUser() {
+   var email=document.getElementById('inputEmail').value;
+   var password=document.getElementById('inputPassword').value;
+   firebase.auth().createUserWithEmailAndPassword(email,password).then(function(){
+    alert('User Register successfully');
+    var id=firebase.auth().currentUser.uid;
+    firebase.database().ref('RestaurantUsers/'+id).set({
+     accountmail : email
+    });
+
+
+
+   }).catch(function(error){
+
+    var errorcode=error.code;
+    var errormsg=error.message;
+
+   });
+  }
+
+</script>
+</body>
+</html>
